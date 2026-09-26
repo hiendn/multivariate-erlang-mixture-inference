@@ -1,0 +1,29 @@
+seed: 20260926
+mode: full
+density replications per design: 150
+resolution replications per design: 120
+functional replications per design: 1000
+density midpoint grid: 60 x 60 on [0, 6]^2
+empirical log-log slope, density MISE: -0.6402
+empirical log-log slope, exceedance MSE: -0.9840
+empirical log-log slope, layer MSE: -0.9835
+
+R version 4.4.0 (2024-04-24)
+Platform: aarch64-apple-darwin20
+Running under: macOS 26.7
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+
+locale:
+[1] C.UTF-8/C.UTF-8/C.UTF-8/C/C.UTF-8/C.UTF-8
+
+time zone: Australia/Melbourne
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+[1] compiler_4.4.0
