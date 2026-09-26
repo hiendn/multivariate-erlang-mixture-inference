@@ -1,0 +1,15 @@
+.DS_Store
+.RData
+.Rhistory
+.Rproj.user/
+*.aux
+*.brf
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+main.pdf
+tmp/
+R2R-review-build-only.*
