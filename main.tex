@@ -1001,12 +1001,15 @@ not a replication of a published fit.  Its density is bounded and Lipschitz
 and has finite inverse half-moment, so the local density results apply with
 $d=2$ and $\alpha=1$.
 
-For $N\in\{200,800,3200\}$, we formed the posterior mean
+For $N\in\{200,500,1000,2000\}$, we formed the posterior mean
 $\widehat f_{N,n}$ by aggregating observations in their occupied cells.  Local
-$L^{2}(Q_{6})$ losses were evaluated by a $60\times60$ midpoint rule over 150
-independent data sets.  We used the derived density resolution
-$n_{D}=\lceil N^{1/2}\rceil$ and, at $N=800$, also varied $n$ to display the
-bias--variance trade-off.  Separately, 1000 data sets were used for the
+$L^{2}(Q_{6})$ losses were evaluated by a $100\times100$ midpoint rule over 150
+independent data sets.  To keep the reported grids readily interpretable, we
+selected $n_D$ from $\{20,50,100,200\}$ by multiplicative proximity to
+$N^{1/2}$, breaking a tie upward.  This gives
+$n_D\in\{20,20,50,50\}$ at the four sample sizes.  At $N=1000$, we also
+evaluated the full regular grid to display the bias--variance trade-off.
+Separately, 1000 data sets at each sample size were used for the
 aggregate exceedance probability
 $\theta_{1}=\Pr(X_{1}+X_{2}>4)=0.21151$ and capped layer
 \[
@@ -1025,9 +1028,9 @@ values were computed by conditional-lognormal quadrature.
 \includegraphics[width=\linewidth]{figures/numerical_demonstration.pdf}
 \caption{Monte Carlo illustration of the derived inferential devices.
 Panel (a) separates squared smoothing bias and sampling variance; the vertical
-line is $\sqrt{800}$.  Panel (b) uses $n_{D}=\lceil N^{1/2}\rceil$ for density
-loss and $n_{\Theta}=N$ for the two bounded functionals.  The grey lines have
-the theoretical reference orders.}
+line is $\sqrt{1000}$.  Panel (b) uses the grid-selected $N^{1/2}$ density
+resolutions for density loss and $n_{\Theta}=N$ for the two bounded
+functionals.  The grey lines have the theoretical reference orders.}
 \label{fig:numerical-demonstration}
 \end{figure}
 
@@ -1044,25 +1047,27 @@ number of occupied components at resolution $n_D$.}
 \toprule
 $N$ & $n_D$ & $\overline K_D$ & Density MISE & Exceedance & Capped layer \\
 \midrule
-200  & 15 & 182  & 0.01386 & 0.02847 (0.02795) & 0.06571 (0.06478) \\
-800  & 29 & 724  & 0.00564 & 0.01401 (0.01424) & 0.03257 (0.03261) \\
-3200 & 57 & 2884 & 0.00235 & 0.00728 (0.00716) & 0.01681 (0.01632) \\
+200  & 20 & 190  & 0.01289 & 0.02749 (0.02798) & 0.06408 (0.06484) \\
+500  & 20 & 439  & 0.00821 & 0.01827 (0.01790) & 0.04141 (0.04115) \\
+1000 & 50 & 957  & 0.00518 & 0.01277 (0.01276) & 0.02895 (0.02919) \\
+2000 & 50 & 1836 & 0.00318 & 0.00910 (0.00905) & 0.02106 (0.02063) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-At $N=800$, the density MISE was minimized at $n=30$, close to the derived
-choice $\lceil\sqrt{800}\rceil=29$: increasing $n$ reduced smoothing bias but
-increased sampling variation and the occupied-component count.  The Monte
+At $N=1000$, the density MISE among the regular candidates was minimized at
+$n=50$; the values $20$ and $50$ bracket $\sqrt{1000}\simeq32$.  Increasing
+$n$ over the candidate grid reduced squared smoothing bias but increased
+sampling variation and the occupied-component count.  The Monte
 Carlo integrated posterior loss agreed with the empirical counterpart of
-\eqref{eq:integrated-posterior-local-risk-exact} to within $1.6\%$ across the
-three sample sizes.  The descriptive log--log slopes were $-0.64$ for density
-MISE and $-0.98$ for the MSE of each functional, compared with the respective
-reference orders $N^{-1/2}$ and $N^{-1}$.  The posterior standard deviations
+\eqref{eq:integrated-posterior-local-risk-exact} to within $2.8\%$ across the
+four sample sizes.  The descriptive log--log slopes were $-0.61$ for density
+MISE and $-0.96$ and $-0.97$ for the MSEs of the two functionals, compared
+with the respective reference orders $N^{-1/2}$ and $N^{-1}$.  The posterior standard deviations
 in Table~\ref{tab:numerical-demonstration} also track the repeated-sampling
-RMSEs.  For example, at $N=800$ the mean posterior covariance between the two
-valuations was $4.29\times10^{-4}$, compared with an empirical covariance of
-$4.19\times10^{-4}$.  These finite-sample comparisons are descriptive rather
+RMSEs.  For example, at $N=1000$ the mean posterior covariance between the two
+valuations was $3.44\times10^{-4}$, compared with an empirical covariance of
+$3.37\times10^{-4}$.  These finite-sample comparisons are descriptive rather
 than additional asymptotic or coverage claims.
 
 The experiment demonstrates the Bayesian-bootstrap construction studied here;

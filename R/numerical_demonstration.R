@@ -23,12 +23,12 @@ if (quick) {
   B_density <- 20L
   B_resolution <- 20L
   B_functional <- 100L
-  grid_size <- 24L
+  grid_size <- 20L
 } else {
   B_density <- 150L
   B_resolution <- 120L
   B_functional <- 1000L
-  grid_size <- 60L
+  grid_size <- 100L
 }
 
 # Target law: a nonsingular bivariate lognormal model from the same family as
@@ -185,10 +185,23 @@ density_experiment <- function(N, n, B) {
     mean_occupied_cells = sum_occupied / B)
 }
 
-# First vary resolution at fixed sample size to display the exact empirical
+# Use round, readily interpretable design values throughout.  For density
+# estimation, select from the regular candidate set by proximity to sqrt(N)
+# on a multiplicative (logarithmic) scale, breaking exact ties upward.  This
+# preserves the n-asymptotic-to-sqrt(N) prescription on a pre-specified,
+# readily interpretable candidate grid.
+regular_resolution_grid <- c(20L, 50L, 100L, 200L)
+select_density_resolution <- function(N) {
+  distance <- abs(log(regular_resolution_grid / sqrt(N)))
+  tie_tolerance <- sqrt(.Machine$double.eps)
+  tied <- which(distance <= min(distance) + tie_tolerance)
+  max(regular_resolution_grid[tied])
+}
+
+# First vary resolution at a round sample size to display the empirical
 # bias--variance decomposition corresponding to Theorem 5.4.
-resolution_N <- 800L
-resolution_n <- c(5L, 10L, 20L, 30L, 45L, 70L, 100L)
+resolution_N <- 1000L
+resolution_n <- regular_resolution_grid
 resolution_rows <- lapply(resolution_n, function(n) {
   out <- density_experiment(resolution_N, n, B_resolution)
   data.frame(N = resolution_N, n = n, bias2 = out[["bias2"]],
@@ -199,10 +212,11 @@ resolution_rows <- lapply(resolution_n, function(n) {
 })
 resolution_summary <- do.call(rbind, resolution_rows)
 
-# Then use the theoretically indicated resolutions.  For d = 2 and alpha = 1,
-# density estimation uses n approximately N^(1/2), whereas the bounded
-# functionals use the sufficient undersmoothing choice n = N.
-N_values <- c(200L, 800L, 3200L)
+# Then use round sample sizes and grid-selected theoretically indicated
+# resolutions.  For d = 2 and alpha = 1, density estimation uses n of order
+# N^(1/2), whereas the bounded functionals use the sufficient undersmoothing
+# choice n = N.
+N_values <- c(200L, 500L, 1000L, 2000L)
 exceedance_u <- 4
 layer_u <- 2.5
 layer_v <- 2.5
@@ -212,7 +226,7 @@ truth <- c(exceedance = target_tail(exceedance_u),
 rate_rows <- vector("list", length(N_values))
 for (j in seq_along(N_values)) {
   N <- N_values[j]
-  n_density <- ceiling(sqrt(N))
+  n_density <- select_density_resolution(N)
   density_out <- density_experiment(N, n_density, B_density)
 
   estimates <- matrix(NA_real_, B_functional, 2L,
@@ -287,6 +301,13 @@ metadata <- c(
   sprintf("functional replications per design: %d", B_functional),
   sprintf("density midpoint grid: %d x %d on [0, %g]^2", grid_size,
           grid_size, M),
+  sprintf("sample sizes: %s", paste(N_values, collapse = ", ")),
+  sprintf("regular density-resolution grid: %s",
+          paste(regular_resolution_grid, collapse = ", ")),
+  sprintf("selected density resolutions: %s",
+          paste(rate_summary$n_density, collapse = ", ")),
+  sprintf("resolution sweep sample size: %d", resolution_N),
+  "functional resolution rule: n = N",
   sprintf("empirical log-log slope, density MISE: %.4f", density_slope),
   sprintf("empirical log-log slope, exceedance MSE: %.4f",
           exceedance_mse_slope),
@@ -314,7 +335,8 @@ draw_figure <- function() {
          pch = c(1, 2, 16), lty = c(2, 3, 1),
          col = c("#0072B2", "#D55E00", "#000000"), bty = "n",
          cex = 0.78)
-  mtext("(a) Bias-variance, N = 800", side = 3, line = 0.4,
+  mtext(sprintf("(a) Bias-variance, N = %d", resolution_N),
+        side = 3, line = 0.4,
         font = 2, cex = 0.86)
 
   y <- cbind(rate_summary$density_mise,
@@ -334,7 +356,7 @@ draw_figure <- function() {
          pch = c(16, 17, 15, NA, NA), lty = c(1, 1, 1, 2, 3),
          col = c("#000000", "#009E73", "#CC79A7", "grey35", "grey35"),
          bty = "n", cex = 0.76)
-  mtext("(b) Risk at derived resolutions", side = 3, line = 0.4,
+  mtext("(b) Risk at grid-selected resolutions", side = 3, line = 0.4,
         font = 2, cex = 0.86)
 }
 
