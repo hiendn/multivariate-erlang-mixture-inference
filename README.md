@@ -21,8 +21,8 @@ covariances for an aggregate exceedance probability and a capped layer.
   across sample sizes.
 - `results/run_metadata.txt` — seed, replication counts, integration grid,
   empirical slopes, and R session information.
-- `figures/numerical_demonstration.pdf` — figure used in the manuscript.
-- `figures/numerical_demonstration.png` — convenient screen-resolution copy.
+- `figures/numerical_demonstration.pdf` — generated figure used in the manuscript.
+- `figures/numerical_demonstration.png` — generated screen-resolution copy.
 
 No external data are used.
 
@@ -35,7 +35,7 @@ Rscript R/numerical_demonstration.R
 ```
 
 The script uses only base R and writes the CSV summaries, run metadata, and
-both figure formats to their tracked locations.  The fixed seed is `20260926`.
+both figure formats to their repository paths.  The fixed seed is `20260926`.
 On the system recorded in `results/run_metadata.txt`, the full run took less
 than one minute.
 
@@ -83,6 +83,9 @@ A standard TeX installation with `latexmk` and pdfLaTeX is sufficient:
 latexmk -pdf main.tex
 ```
 
+Run the numerical script once before this command so that the generated PDF
+figure is present.
+
 The bibliography is included directly in `main.tex`; BibTeX and Biber are not
 required.
 
@@ -90,4 +93,3 @@ required.
 
 The manuscript and code are provided here for scholarly review and
 reproducibility.  No separate reuse licence is asserted in this repository.
-
