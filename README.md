@@ -57,15 +57,15 @@ mu    = (0, 0.25)
 Sigma = ((0.36, 0.264), (0.264, 0.64))
 ```
 
-so the log-scale correlation is `0.55`.  The experiment uses the conventional
-round sample sizes `N = 200, 500, 1000, 2000`.
+so the log-scale correlation is `0.55`.  The experiment uses sample sizes
+`N = 200, 500, 1000, 2000`.
 
 - Local density loss is evaluated on `[0,6]^2` with a `100 x 100` midpoint grid
-  and 150 replications per sample size.  Density resolutions are selected from
-  the regular grid `n = 20, 50, 100, 200` by multiplicative proximity to
-  `sqrt(N)`, with ties rounded upward.  This gives
-  `n_D = 20, 20, 50, 50`.  A 120-replication sweep over the same regular grid
-  at `N = 1000` displays the bias–variance trade-off.
+  and 150 replications per sample size.  The manuscript's rule
+  `n_D = ceiling(sqrt(N))` gives `n_D = 15, 23, 32, 45`, respectively.
+  A separate 120-replication sweep at `N = 1000` uses
+  `n = 20, 32, 50, 100, 200` to display the bias–variance trade-off; `32` is
+  the prescribed resolution at that sample size.
 - The functional experiment uses 1000 replications and the sufficient
   undersmoothing choice `n_Theta = N`.  It studies
   `Pr(X1 + X2 > 4)` and

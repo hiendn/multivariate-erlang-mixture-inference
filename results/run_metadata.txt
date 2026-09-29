@@ -5,13 +5,14 @@ resolution replications per design: 120
 functional replications per design: 1000
 density midpoint grid: 100 x 100 on [0, 6]^2
 sample sizes: 200, 500, 1000, 2000
-regular density-resolution grid: 20, 50, 100, 200
-selected density resolutions: 20, 20, 50, 50
+density resolution rule: n_D = ceiling(sqrt(N))
+selected density resolutions: 15, 23, 32, 45
 resolution sweep sample size: 1000
+resolution sweep values: 20, 32, 50, 100, 200
 functional resolution rule: n = N
-empirical log-log slope, density MISE: -0.6084
-empirical log-log slope, exceedance MSE: -0.9644
-empirical log-log slope, layer MSE: -0.9726
+empirical log-log slope, density MISE: -0.6425
+empirical log-log slope, exceedance MSE: -0.9861
+empirical log-log slope, layer MSE: -0.9993
 
 R version 4.4.0 (2024-04-24)
 Platform: aarch64-apple-darwin20

@@ -185,23 +185,13 @@ density_experiment <- function(N, n, B) {
     mean_occupied_cells = sum_occupied / B)
 }
 
-# Use round, readily interpretable design values throughout.  For density
-# estimation, select from the regular candidate set by proximity to sqrt(N)
-# on a multiplicative (logarithmic) scale, breaking exact ties upward.  This
-# preserves the n-asymptotic-to-sqrt(N) prescription on a pre-specified,
-# readily interpretable candidate grid.
-regular_resolution_grid <- c(20L, 50L, 100L, 200L)
-select_density_resolution <- function(N) {
-  distance <- abs(log(regular_resolution_grid / sqrt(N)))
-  tie_tolerance <- sqrt(.Machine$double.eps)
-  tied <- which(distance <= min(distance) + tie_tolerance)
-  max(regular_resolution_grid[tied])
-}
-
-# First vary resolution at a round sample size to display the empirical
-# bias--variance decomposition corresponding to Theorem 5.4.
+# At each sample size the density resolution follows Corollary 5.5 exactly:
+# n_D = ceiling(sqrt(N)) for d = 2 and alpha = 1.  A separate diagnostic
+# sweep includes this value and round comparison resolutions at N = 1000.
+density_resolution <- function(N) as.integer(ceiling(sqrt(N)))
 resolution_N <- 1000L
-resolution_n <- regular_resolution_grid
+resolution_n <- sort(unique(c(20L, density_resolution(resolution_N),
+                              50L, 100L, 200L)))
 resolution_rows <- lapply(resolution_n, function(n) {
   out <- density_experiment(resolution_N, n, B_resolution)
   data.frame(N = resolution_N, n = n, bias2 = out[["bias2"]],
@@ -212,10 +202,8 @@ resolution_rows <- lapply(resolution_n, function(n) {
 })
 resolution_summary <- do.call(rbind, resolution_rows)
 
-# Then use round sample sizes and grid-selected theoretically indicated
-# resolutions.  For d = 2 and alpha = 1, density estimation uses n of order
-# N^(1/2), whereas the bounded functionals use the sufficient undersmoothing
-# choice n = N.
+# Use round sample sizes with the exact integer square-root density rule.
+# Bounded functionals use the sufficient undersmoothing choice n = N.
 N_values <- c(200L, 500L, 1000L, 2000L)
 exceedance_u <- 4
 layer_u <- 2.5
@@ -226,7 +214,7 @@ truth <- c(exceedance = target_tail(exceedance_u),
 rate_rows <- vector("list", length(N_values))
 for (j in seq_along(N_values)) {
   N <- N_values[j]
-  n_density <- select_density_resolution(N)
+  n_density <- density_resolution(N)
   density_out <- density_experiment(N, n_density, B_density)
 
   estimates <- matrix(NA_real_, B_functional, 2L,
@@ -302,11 +290,11 @@ metadata <- c(
   sprintf("density midpoint grid: %d x %d on [0, %g]^2", grid_size,
           grid_size, M),
   sprintf("sample sizes: %s", paste(N_values, collapse = ", ")),
-  sprintf("regular density-resolution grid: %s",
-          paste(regular_resolution_grid, collapse = ", ")),
+  "density resolution rule: n_D = ceiling(sqrt(N))",
   sprintf("selected density resolutions: %s",
           paste(rate_summary$n_density, collapse = ", ")),
   sprintf("resolution sweep sample size: %d", resolution_N),
+  sprintf("resolution sweep values: %s", paste(resolution_n, collapse = ", ")),
   "functional resolution rule: n = N",
   sprintf("empirical log-log slope, density MISE: %.4f", density_slope),
   sprintf("empirical log-log slope, exceedance MSE: %.4f",
@@ -324,13 +312,17 @@ draw_figure <- function() {
       mgp = c(3.2, 0.75, 0), tcl = -0.25, las = 1,
       cex = 0.84)
 
-  matplot(resolution_summary$n,
-          resolution_summary[, c("bias2", "variance", "mise")],
+  density_components <- as.matrix(
+    resolution_summary[, c("bias2", "variance", "mise")]
+  )
+  matplot(resolution_summary$n, density_components,
           type = "b", log = "xy", pch = c(1, 2, 16), lty = c(2, 3, 1),
           col = c("#0072B2", "#D55E00", "#000000"),
+          ylim = c(min(density_components) * 0.8,
+                   max(density_components) * 3),
           xlab = expression("resolution " * n),
           ylab = "integrated squared error")
-  abline(v = sqrt(resolution_N), lty = 3, col = "grey45")
+  abline(v = density_resolution(resolution_N), lty = 3, col = "grey45")
   legend("topright", c("squared bias", "sampling variance", "MISE"),
          pch = c(1, 2, 16), lty = c(2, 3, 1),
          col = c("#0072B2", "#D55E00", "#000000"), bty = "n",
@@ -345,6 +337,7 @@ draw_figure <- function() {
   matplot(rate_summary$N, y, type = "b", log = "xy",
           pch = c(16, 17, 15), lty = 1,
           col = c("#000000", "#009E73", "#CC79A7"),
+          ylim = c(min(y) * 0.8, max(y) * 3),
           xlab = expression("sample size " * N), ylab = "mean squared error")
   ref_density <- y[1L, 1L] * (rate_summary$N / rate_summary$N[1L])^(-0.5)
   ref_functional <- y[1L, 2L] * (rate_summary$N / rate_summary$N[1L])^(-1)
@@ -356,7 +349,7 @@ draw_figure <- function() {
          pch = c(16, 17, 15, NA, NA), lty = c(1, 1, 1, 2, 3),
          col = c("#000000", "#009E73", "#CC79A7", "grey35", "grey35"),
          bty = "n", cex = 0.76)
-  mtext("(b) Risk at grid-selected resolutions", side = 3, line = 0.4,
+  mtext("(b) Risk at prescribed resolutions", side = 3, line = 0.4,
         font = 2, cex = 0.86)
 }
 

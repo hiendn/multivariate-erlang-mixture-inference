@@ -36,7 +36,7 @@
 % Reviewer-facing revisions are blue.
 \newenvironment{revision}{\begingroup\color{blue}}{\endgroup}
 
-\title{Approximation by mixtures of multivariate Erlang distributions}
+\title{Approximation \textcolor{blue}{and Bayesian estimation} by mixtures of multivariate Erlang distributions}
 \author{Hien Duy Nguyen\\[0.4em]
 \small School of Computing, Engineering and Mathematical Sciences, La Trobe University,\\
 \small Bundoora, VIC 3086, Australia\\[0.2em]
@@ -64,9 +64,9 @@ bounds after undersmoothing.  Common-rate Erlang convolutions give closed-form
 component values for aggregate exceedance probabilities and capped losses.
 \end{revision}
 \end{abstract}
-\par\smallskip\noindent\textbf{Keywords:} multivariate Erlang mixtures; Erlang distributions;
+\par\smallskip\noindent\textbf{Keywords:} multivariate Erlang mixtures;
 Sz\'asz--Mirakjan--Kantorovich operator; Bayesian bootstrap; density estimation;
-actuarial valuation; minimax rate; approximation rates.
+actuarial valuation; approximation rates.
 
 \section{Introduction}
 \label{sec:introduction}
@@ -74,35 +74,30 @@ actuarial valuation; minimax rate; approximation rates.
 
 \begin{revision}
 \nopagebreak[4]
-Modelling a joint distribution on the positive orthant is a recurring task in
-actuarial science, risk theory, reliability, and applied statistics.  Examples
-include dependent claim severities, indemnity and allocated loss-adjustment
-expenses, aggregate-loss calculations, deductibles and policy limits, and
-survival or life-contingency quantities
+Joint distributions of nonnegative losses are used to model dependent claim
+severities and expenses and to calculate aggregate losses, policy payments,
+and survival quantities
 \cite{Boland2007,KaasGoovaertsDhaeneDenuit2008,KlugmanPanjerWillmot2012,Promislow2015}.
-Multivariate Erlang mixtures combine positive-support modelling with
-tractable survival,
-convolution, and stop-loss calculations.  In particular,
+Multivariate Erlang mixtures admit formulas for survival probabilities,
+convolutions, and stop-loss expectations.  In particular,
 \cite{LeeLin2012} introduced a multivariate common-rate Erlang-mixture class and
-established weak denseness, while subsequent work developed likelihood fitting,
+established weak denseness, while related work developed likelihood fitting,
 censoring methods, penalised estimation, and structural insurance calculations
-\cite{GuiHuangLin2021,VerbelenAntonioClaeskens2016,WillmotLin2011,WillmotWoo2015,YinEtAl2019}.
+\cite{GuiHuangLin2021,LeeLin2010,VerbelenAntonioClaeskens2016,WillmotLin2011,WillmotWoo2015,YinEtAl2019}.
 Bayesian positive-support mixture modelling includes gamma-mixture priors for
-density estimation and structured common-scale Erlang basis priors for
+density estimation, Erlang mixtures for insurance claim sizes and survival
+analysis, and structured common-scale Erlang basis priors for
 Poisson-process intensities
-\cite{BochkinaRousseau2017,KimKottas2022,WiperInsuaRuggeri2001}.
-Here we instead apply an Erlang smoothing map to the Bayesian-bootstrap
-posterior of the sampling distribution, so that the approximation bounds
-control the smoothing bias of a fitted mixture.
+\cite{AusinLopes2007,BochkinaRousseau2017,KimKottas2022,LiLeeKottas2024,WiperInsuaRuggeri2001}.
 
-Our work addresses two linked questions.  How accurately can a multivariate
-density on $\mathbb{R}_{+}^{d}$ be approximated by a finite common-rate Erlang
-mixture, and what do these bounds imply when the mixture is estimated from
-observations?  The one-dimensional Sz\'asz--Mirakjan--Kantorovich operator \cite[Section~2]{AltomareCappellettiLeonessa2013},
-its coordinatewise product, and a truncation argument give $L^{p}$ denseness,
-compact-uniform and weighted approximation, and rates indexed by the common
-scale and number of components.  The mixture coefficients are probabilities
-of grid cells, which provides the connection to estimation.
+We study approximation of densities on $\mathbb{R}_{+}^{d}$ by finite
+common-rate Erlang mixtures and use the resulting bounds for Bayesian
+estimation of claim densities and actuarial valuations.  The one-dimensional
+Sz\'asz--Mirakjan--Kantorovich operator
+\cite[Section~2]{AltomareCappellettiLeonessa2013}, its coordinatewise product,
+and a truncation argument give $L^{p}$ denseness, compact-uniform and weighted
+approximation, and rates indexed by the common scale and number of components.
+The mixture coefficients are probabilities of grid cells.
 
 For continuous payoff functions, weak convergence and uniform integrability of
 the payoffs ensure convergence of expected values.  Density-level approximation
@@ -123,11 +118,11 @@ the true density.  The deterministic approximation error is therefore the
 bias of this fitted estimator.
 
 For bounded densities that are locally H\"older of order $\alpha\in(0,1]$, the
-compact approximation bound gives local squared $L^2$ bias of order
-$n^{-\alpha}$, where $n$ is the common Erlang rate.  Under an inverse
-half-moment condition, the Erlang-kernel norm bound gives a variance term of
-order $n^{d/2}/N$.  Balancing these terms yields the local squared density-risk
-order $N^{-2\alpha/(2\alpha+d)}$.  The same order holds for the integrated
+compact approximation bound gives an upper bound of order $n^{-\alpha}$ on
+the local squared $L^2$ bias, where $n$ is the common Erlang rate.  Under an
+inverse half-moment condition, the variance is bounded by a term of order
+$n^{d/2}/N$.  Balancing these bounds yields local squared density risk
+$O(N^{-2\alpha/(2\alpha+d)})$, with the same upper rate for integrated
 posterior loss.  The exponent is minimax when the density class contains a
 nontrivial H\"older ball supported in an interior cube \cite{Tsybakov2009}.
 
@@ -135,10 +130,12 @@ For bounded actuarial valuations that are constant outside a compact loss
 region, the posterior mean and covariance are explicit Dirichlet-weight
 calculations.  The squared-error bound has order $n^{-\alpha}+N^{-1}$, so
 $n\asymp N^{1/\alpha}$ is sufficient for the parametric order $N^{-1}$.
-Common-rate Erlang convolutions give closed-form component values for
-aggregate exceedance probabilities, limited expected losses, capped stop-loss
-layers, and lower-orthant probabilities.
+Common-rate Erlang convolutions and coordinatewise distribution functions
+give closed-form component values for aggregate exceedance probabilities,
+limited expected losses, capped stop-loss layers, and lower-orthant probabilities.
 
+Approximation by location-scale finite mixtures in Lebesgue spaces is studied
+in \cite{NguyenEtAl2020,NguyenEtAl2023}.
 Related approximation results include the one-dimensional $L^p$ convergence
 and weighted approximation theory for generalized
 Sz\'asz--Mirakjan--Kantorovich operators
@@ -147,25 +144,24 @@ $L^p$ approximation orders in \cite{Totik1983}.  For Bayesian density
 estimation on the positive half-line, \cite{BochkinaRousseau2017} approximate
 locally H\"older densities by gamma mixtures and derive adaptive $L^1$
 posterior contraction rates that are minimax up to logarithmic factors under
-their regularity and tail conditions.  Their gamma-mixture prior differs from
-smoothing the Bayesian-bootstrap distribution at a specified resolution.
-The latter construction allows the deterministic approximation bounds to be
-combined with Dirichlet-weight identities for density and valuation risk.
+their regularity and tail conditions.  Actuarial applications include
+Bayesian gamma-kernel mixtures for credibility premiums
+\cite{LauSiuYang2006} and Erlang mixtures for claim-size modelling and ruin
+probabilities \cite{AusinLopes2007}.  These likelihood-based mixture models
+differ from smoothing the Bayesian-bootstrap distribution at a specified
+resolution, which gives the bias and Dirichlet-weight identities used here.
 
 The remainder of the paper is organised as follows.
 Section~\ref{sec:notation} defines the Erlang kernels and tensorized operator.
 Sections~\ref{sec:qualitative} and~\ref{sec:scale-rates} state the core
 approximation results used later.  Section~\ref{sec:bayesian-estimation}
-constructs the Bayesian-bootstrap Erlang posterior and proves its local density
+constructs the Bayesian-bootstrap Erlang posterior and bounds its local density
 risk.  Section~\ref{sec:actuarial-functionals} develops the actuarial
 functionals and their closed-form component valuations.
 Section~\ref{sec:numerical-demonstration} illustrates the density-risk
 decomposition and joint inference for two bounded actuarial quantities.
 Section~\ref{sec:discussion} relates the results to published fitting examples
-and discusses further applications.  Appendix~\ref{app:additional-approximation}
-contains the additional weighted and component-count results, including the
-kernel norm bound used for density risk.  The proofs are collected in
-Appendices~\ref{sec:proofs} and~\ref{app:bayesian-proofs}.
+and discusses further applications.  The appendices contain technical results and proofs.
 \end{revision}
 \section{Notation and technical preliminaries}
 
@@ -240,17 +236,13 @@ We also define the intrinsic weighted modulus of continuity
 \Omega_{\nu,*}(f;\delta)=\sup\left\{ \frac{\left\lvert f(y)-f(x)\right\rvert }{w_{\nu}(x)}:x,y\in\mathbb{R}_{+}^{d},\ \left\lVert y-x\right\rVert _{2}\le\delta\sqrt{1+\left\lVert x\right\rVert _{1}}\right\} ,\qquad\delta>0.\label{eq:intrinsic-modulus-def}
 \end{equation}
 The weight $w_{\nu}$ permits polynomial growth of order $\nu$ at
-infinity. \textcolor{blue}{The scale $\delta\sqrt{1+\left\lVert x\right\rVert _{1}}$
-in $\Omega_{\nu,*}$ reflects the displacement bound in
-Proposition~\ref{prop:prob-representation} and Lemma~\ref{lem:displacement-moments}.
-The second moment of $Y_{n,x}-x$ is bounded above by a constant times
-$(1+\left\lVert x\right\rVert _{1})/n$, so
-$\sqrt{(1+\left\lVert x\right\rVert _{1})/n}$ bounds the root mean squared displacement up to a constant
-depending only on $d$.} \textcolor{blue}{Weighted norms and moduli of smoothness are used in approximation
+infinity. \textcolor{blue}{Weighted norms and moduli of smoothness are used in approximation
 on unbounded intervals and for positive operators on the half-line
 \cite{AltomareCappellettiLeonessa2013,DitzianTotik1987}.}
 
-The one-dimensional Szász--Mirakjan--Kantorovich operator is given
+The one-dimensional Szász--Mirakjan--Kantorovich operator
+\textcolor{blue}{is the integral modification introduced in \cite{Butzer1954}
+of the Szász--Mirakjan operators \cite{Mirakyan1941,Szasz1950}.  It} is given
 by 
 \begin{equation}
 (K_{n}g)(x)=n\sum_{k=0}^{\infty}e^{-nx}\frac{(nx)^{k}}{k!}\int_{k/n}^{(k+1)/n}g(t)\,\mathrm{d}t,\qquad x\ge0.\label{eq:Kn-def-main}
@@ -293,18 +285,9 @@ operation is applied successively in each coordinate.  This coordinatewise
 product construction is also used for bivariate Sz\'asz--Mirakjan--Kantorovich
 operators in \cite[Section~3, Lemma~3.1]{BarbosuEtAl2010}.  Equivalently,
 the resulting multivariate kernels are products of one-dimensional Erlang
-densities.  For example, when $d=2$, Proposition~\ref{prop:explicit-mixed-erlang}
-gives
-\[
- (\mathcal K_n^{(2)}f)(x_1,x_2)
- =\sum_{m_1,m_2\geq1}a_{(m_1,m_2),n}
-   \tau_{m_1,n}(x_1)\tau_{m_2,n}(x_2).
-\]
-The product form of each component does not impose independence on the target
-law because dependence is represented by the joint cell-weight array
-$\{a_{(m_1,m_2),n}\}$, which need not factorize into marginal weights.
+densities.
 \end{revision}
-The operator admits a useful probabilistic representation.
+The operator admits a probabilistic representation.
 
 \begin{proposition}[A probabilistic representation]\label{prop:prob-representation}
 Fix $d\in\mathbb{N}$, $n\in\mathbb{N}$, and $x=(x_{1},\dots,x_{d})\in\mathbb{R}_{+}^{d}$.
@@ -334,6 +317,13 @@ where one may take $C_{r,d}=(1+d/3)^{r/2}$. Finally, for every $\eta>0$,
 \mathbb{P}\left(\left\lVert \Delta_{n,x}\right\rVert _{2}>\eta\right)\le\frac{1}{\eta^{2}}\left(\frac{\left\lVert x\right\rVert _{1}}{n}+\frac{d}{3n^{2}}\right).\label{eq:tail-displacement-main}
 \end{equation}
 \end{lemma}
+
+\textcolor{blue}{The scale $\delta\sqrt{1+\left\lVert x\right\rVert _{1}}$
+in $\Omega_{\nu,*}$ reflects the displacement of $Y_{n,x}$ in
+Proposition~\ref{prop:prob-representation}.  Lemma~\ref{lem:displacement-moments}
+bounds the root mean squared displacement by a constant times
+$\sqrt{(1+\left\lVert x\right\rVert _{1})/n}$, with the constant depending
+only on $d$.}
 
 \begin{lemma}[Weighted moments of $Y_{n,x}$]\label{lem:weighted-moments}
 Let $\nu\ge0$. Then there exists a constant $A_{\nu,d}>0$ such that
@@ -389,6 +379,19 @@ Then $a_{m,n}\ge0$, $\sum_{m\in\mathbb{N}^{d}}a_{m,n}=1$, and
 Consequently, $\mathcal{K}_{n}^{(d)}f$ is a countable multivariate
 Erlang mixture density with common rate $\beta_{n}=n$ (equivalently, common
 scale $1/n$). \end{proposition}
+
+\begin{revision}
+For example, when $d=2$, Proposition~\ref{prop:explicit-mixed-erlang}
+gives
+\[
+ (\mathcal K_n^{(2)}f)(x_1,x_2)
+ =\sum_{m_1,m_2\geq1}a_{(m_1,m_2),n}
+   \tau_{m_1,n}(x_1)\tau_{m_2,n}(x_2).
+\]
+The product form of each component does not impose independence on the target
+law because dependence is represented by the joint cell-weight array
+$\{a_{(m_1,m_2),n}\}$, which need not factorize into marginal weights.
+\end{revision}
 
 \begin{corollary}[Countable Erlang mixture approximation]\label{cor:countable}
 Let $d\in\mathbb{N}$ and $1\le p<\infty$. For every $f\in\mathcal{D}_{p}(\mathbb{R}_{+}^{d})$,
@@ -474,7 +477,8 @@ where one may take $C_{\alpha,d}=(1+d/3)^{\alpha/2}$. In particular,
 
 \begin{revision}
 Throughout this section, $X_{1},\ldots,X_{N}$ are independent observations
-from a probability density $f$ on $\mathbb{R}_{+}^{d}$.  For
+from a probability density $f$ on $\mathbb{R}_{+}^{d}$.  Write
+$\mathbf{X}_{N}=(X_{1},\ldots,X_{N})$ for the sample.  For
 $x\in\mathbb{R}_{+}^{d}$, define
 \begin{equation}
  m_{n}(x)=\bigl(1+\lfloor nx_{1}\rfloor,\ldots,
@@ -486,7 +490,7 @@ $x\in\mathbb{R}_{+}^{d}$, define
 \end{equation}
 The map $x\mapsto\varphi_{n,x}$ is constant on each cell $\mathcal C_{m,n}$.
 
-\subsection{Smoothing probability measures and transferring oracle error}
+\subsection{Smoothing probability measures and estimating cell weights}
 
 For any probability measure $P$ on $\mathbb{R}_{+}^{d}$, define its
 Erlang-smoothed density by
@@ -497,7 +501,6 @@ Erlang-smoothed density by
  \label{eq:measure-smoothing-map}
 \end{equation}
 where $\varphi_{m,n}(y)=\prod_{j=1}^{d}\tau_{m_{j},n}(y_{j})$.
-The second equality follows by partitioning the $x$-integral over the cells.
 For a bounded measurable valuation function $\psi$ and a density $g$, write
 \begin{equation}
  \Theta_{\psi}(g)=\int_{\mathbb{R}_{+}^{d}}\psi(y)g(y)\,\mathrm{d}y.
@@ -538,40 +541,38 @@ For every bounded measurable valuation function $\psi$,
 \end{align}
 \end{proposition}
 
-Proposition~\ref{prop:measure-smoothing-transfer} gives a direct answer for a
-fixed-grid statistical fit.  The approximation results control the first term
-in \eqref{eq:oracle-estimation-decomposition}, while a statistical analysis of
-the estimated cell weights controls the second.  The Bayesian-bootstrap
-construction below instead yields an exact local $L^2$ risk decomposition
-for a particular fitted distribution.
+In \eqref{eq:oracle-estimation-decomposition}, the first term is the
+approximation error and the second is the error in estimating the cell
+probabilities.  For the Bayesian-bootstrap fit, the local $L^2$ risk can be
+calculated directly from the moments of the random weights.
 
 \subsection{The Bayesian-bootstrap Erlang posterior}
 
 Let
 \begin{equation}
- (W_{1},\ldots,W_{N})\mid X_{1:N}
+ (W_{1},\ldots,W_{N})\mid \mathbf{X}_{N}
  \sim\operatorname{Dirichlet}(1,\ldots,1)
  \label{eq:bb-weights}
 \end{equation}
 independently of all other randomness conditional on the data, and define the
 Bayesian-bootstrap draw
 $P_{N}^{W}=\sum_{i=1}^{N}W_{i}\delta_{X_{i}}$.
-The induced random density and its posterior mean are
+The smoothed density and its posterior mean are
 \begin{align}
  f_{N,n}^{W}(y)
  &=\mathcal{E}_{n}P_{N}^{W}(y)
  =\sum_{i=1}^{N}W_{i}\varphi_{n,X_{i}}(y),
  \label{eq:bb-erlang-posterior-draw}\\
  \widehat f_{N,n}(y)
- &=\mathbb{E}_{W}[f_{N,n}^{W}(y)\mid X_{1:N}]
+ &=\mathbb{E}_{W}[f_{N,n}^{W}(y)\mid \mathbf{X}_{N}]
  =\frac{1}{N}\sum_{i=1}^{N}\varphi_{n,X_{i}}(y).
  \label{eq:bb-erlang-posterior-mean}
 \end{align}
-Let $\Pi_{N,n}(\cdot\mid X_{1:N})$ denote the conditional distribution of
+Let $\Pi_{N,n}(\cdot\mid \mathbf{X}_{N})$ denote the conditional distribution of
 $f_{N,n}^{W}$ induced by the Dirichlet weights in
 \eqref{eq:bb-weights}.
 
-\begin{proposition}[Finite posterior mixture and oracle mean]
+\begin{proposition}[Finite posterior mixture and frequentist bias]
 \label{prop:bb-finite-oracle}
 Conditional on the data, every $f_{N,n}^{W}$ is a finite multivariate Erlang
 mixture density with common rate $n$ and at most $N$ distinct components.  If
@@ -589,11 +590,6 @@ $\mathcal{K}_{n}^{(d)}f-f$ is exactly the frequentist bias of the posterior
 mean.
 \end{proposition}
 
-This smoothed Bayesian-bootstrap posterior differs from a prior placed
-directly on the weights, shapes, and common rate of an exact finite-mixture
-likelihood.  Its risk analysis follows from the Erlang smoothing operator
-developed in Sections~\ref{sec:notation}--\ref{sec:scale-rates}.
-
 \begin{lemma}[Dirichlet-weight identity in a Hilbert space]
 \label{lem:dirichlet-hilbert}
 Let $z_{1},\ldots,z_{N}$ belong to a real Hilbert space $\mathbb{H}$, let
@@ -610,9 +606,9 @@ $W\sim\operatorname{Dirichlet}(1,\ldots,1)$.  Then
  \right\}.
  \label{eq:dirichlet-hilbert-identity}
 \end{equation}
-If $Z_{1},\ldots,Z_{N}$ are independent copies of a square-integrable random
+If $\mathbf{Z}_{N}=(Z_{1},\ldots,Z_{N})$ consists of independent copies of a square-integrable random
 element $Z$ with mean $\mu$, the Dirichlet vector $W$ is independent of
-$Z_{1:N}$, and $z_{i}=Z_{i}$, then, for every $h\in\mathbb{H}$,
+$\mathbf{Z}_{N}$, and $z_{i}=Z_{i}$, then, for every $h\in\mathbb{H}$,
 \begin{align}
  \mathbb{E}\|\overline Z-h\|_{\mathbb{H}}^{2}
  &=\|\mu-h\|_{\mathbb{H}}^{2}
@@ -620,13 +616,12 @@ $Z_{1:N}$, and $z_{i}=Z_{i}$, then, for every $h\in\mathbb{H}$,
  \label{eq:sample-mean-hilbert-risk}\\
  \mathbb{E}\mathbb{E}_{W}
  \left[\left\|\sum_{i=1}^{N}W_{i}Z_{i}-h\right\|_{\mathbb{H}}^{2}
- \middle|Z_{1:N}\right]
+ \middle|\mathbf{Z}_{N}\right]
  &=\|\mu-h\|_{\mathbb{H}}^{2}
    +\frac{2}{N+1}\mathbb{E}\|Z-\mu\|_{\mathbb{H}}^{2}.
  \label{eq:integrated-bb-hilbert-risk}
 \end{align}
 \end{lemma}
-
 \subsection{Local density risk and minimax order}
 
 For $M>0$, define the compact approximation bound
@@ -649,12 +644,10 @@ We also use the inverse boundary moment
    \prod_{j=1}^{d}x_{j}^{-1/2}f(x)\,\mathrm{d}x.
  \label{eq:inverse-half-moment}
 \end{equation}
-The assumption $\mu_{-1/2}(f)<\infty$ permits mass near zero but excludes
-excessively strong singularities on the coordinate boundaries.  It holds, for
-example, for bounded densities supported on compact rectangles and for finite
-mixtures of product-gamma densities whose coordinatewise shapes exceed $1/2$.
-Lemma~\ref{lem:inverse-half-moment-check} verifies these cases and nonsingular
-multivariate lognormal densities.
+Lemma~\ref{lem:inverse-half-moment-check} verifies that
+$\mu_{-1/2}(f)<\infty$ for bounded densities supported on compact rectangles,
+finite mixtures of product-gamma densities whose coordinatewise shapes exceed
+$1/2$, and nonsingular multivariate lognormal densities.
 
 \begin{theorem}[Exact local posterior risk and an explicit bound]
 \label{thm:local-bayesian-risk}
@@ -677,7 +670,7 @@ Then
  \label{eq:posterior-mean-local-risk-exact}\\
  \mathbb{E}_{f}\mathbb{E}_{W}
  \left[\|f_{N,n}^{W}-f\|_{L^{2}(Q_{M})}^{2}
- \mid X_{1:N}\right]
+ \mid \mathbf{X}_{N}\right]
  &=\|\mathcal{K}_{n}^{(d)}f-f\|_{L^{2}(Q_{M})}^{2}
    +\frac{2V_{n,M}(f)}{N+1}.
  \label{eq:integrated-posterior-local-risk-exact}
@@ -691,7 +684,7 @@ Moreover,
  \label{eq:posterior-mean-local-risk-bound}\\
  \mathbb{E}_{f}\mathbb{E}_{W}
  \left[\|f_{N,n}^{W}-f\|_{L^{2}(Q_{M})}^{2}
- \mid X_{1:N}\right]
+ \mid \mathbf{X}_{N}\right]
  &\leq
  M^{d}\Delta_{n,M}(f;H,\alpha)^{2}
  +\frac{2n^{d/2}\mu_{-1/2}(f)}{N+1}.
@@ -700,16 +693,16 @@ Moreover,
 \end{theorem}
 
 For constants $B,H_{0},\mu_{0}>0$, write
-\begin{align}
- \mathcal{F}_{\alpha}(M;B,H_{0},\mu_{0})
- =\bigl\{f\in\mathcal{D}_{2}(\mathbb{R}_{+}^{d}):{}
- &\ \|f\|_{\infty}\leq B,\nonumber\\[-0.2em]
- &\ |f(y)-f(z)|\leq H_{0}\|y-z\|_{2}^{\alpha}
-     \text{ for }y,z\in Q_{M+1},\nonumber\\[-0.2em]
- &\ \mu_{-1/2}(f)\leq\mu_{0}\bigr\}.
+\begin{equation}
+ \begin{aligned}
+  \mathcal{F}_{\alpha}(M;B,H_{0},\mu_{0})
+  =\left\{f\in\mathcal{D}_{2}(\mathbb{R}_{+}^{d}):{}\right.
+  &\ \|f\|_{\infty}\leq B,\quad \mu_{-1/2}(f)\leq\mu_{0},\\
+  &\ \left.|f(y)-f(z)|\leq H_{0}\|y-z\|_{2}^{\alpha}
+       \text{ for }y,z\in Q_{M+1}\right\}.
+ \end{aligned}
  \label{eq:local-holder-density-class}
-\end{align}
-
+\end{equation}
 \begin{corollary}[Minimax-order local density estimation]
 \label{cor:minimax-local-density}
 Let $n_{N}=\lceil N^{2/(2\alpha+d)}\rceil$.  There is a constant $C>0$,
@@ -722,7 +715,7 @@ depending only on $d,\alpha,M,B,H_{0}$, and $\mu_{0}$, such that
  \sup_{f\in\mathcal{F}_{\alpha}(M;B,H_{0},\mu_{0})}
  \mathbb{E}_{f}\mathbb{E}_{W}
  \left[\|f_{N,n_{N}}^{W}-f\|_{L^{2}(Q_{M})}^{2}
- \mid X_{1:N}\right]
+ \mid \mathbf{X}_{N}\right]
  &\leq C N^{-2\alpha/(2\alpha+d)}.
  \label{eq:minimax-integrated-posterior-rate}
 \end{align}
@@ -733,7 +726,7 @@ $\Pi_{N,n_{N}}$ satisfies
  \sup_{f\in\mathcal{F}_{\alpha}(M;B,H_{0},\mu_{0})}
  \mathbb{E}_{f}\Pi_{N,n_{N}}
  \left(\|g-f\|_{L^{2}(Q_{M})}>L_{N}\varepsilon_{N}
- \mid X_{1:N}\right)\longrightarrow0.
+ \mid \mathbf{X}_{N}\right)\longrightarrow0.
  \label{eq:local-posterior-contraction}
 \end{equation}
 \end{corollary}
@@ -764,8 +757,9 @@ $\psi:\mathbb{R}_{+}^{d}\to\mathbb{R}$, recall $\Theta_{\psi}$ from
  \psi(y)\varphi_{n,x}(y)\,\mathrm{d}y.
  \label{eq:functional-and-component-value}
 \end{equation}
-Because $\varphi_{n,x}$ is a probability density,
-$|b_{\psi,n}(x)|\leq\|\psi\|_{\infty}$.
+The quantity $b_{\psi,n}(x)$ is the expected payoff $\psi$ under the
+product-Erlang component $\varphi_{n,x}$.  Since this component is a probability
+density, $|b_{\psi,n}(x)|\leq\|\psi\|_{\infty}$.
 
 \begin{proposition}[Posterior mean and covariance of actuarial valuations]
 \label{prop:functional-posterior}
@@ -775,7 +769,7 @@ For every bounded measurable $\psi$,
  &=\sum_{i=1}^{N}W_{i}b_{\psi,n}(X_{i}),
  \label{eq:functional-posterior-draw}\\
  \widehat\Theta_{\psi,N,n}
- =\mathbb{E}_{W}[\Theta_{\psi}(f_{N,n}^{W})\mid X_{1:N}]
+ =\mathbb{E}_{W}[\Theta_{\psi}(f_{N,n}^{W})\mid \mathbf{X}_{N}]
  &=\frac{1}{N}\sum_{i=1}^{N}b_{\psi,n}(X_{i}).
  \label{eq:functional-posterior-mean}
 \end{align}
@@ -783,8 +777,8 @@ For bounded valuation functions $\psi_{1},\ldots,\psi_{J}$,
 \begin{align}
  &\operatorname{Cov}_{W}\!
  \left\{\Theta_{\psi_{j}}(f_{N,n}^{W}),
-        \Theta_{\psi_{k}}(f_{N,n}^{W})\mid X_{1:N}\right\}
- \nonumber\\
+        \Theta_{\psi_{k}}(f_{N,n}^{W})\mid \mathbf{X}_{N}\right\}
+ \nonumber\\*
  &\quad=\frac{1}{N+1}
  \left\{
  \frac{1}{N}\sum_{i=1}^{N}
@@ -800,8 +794,8 @@ of retentions, limits, and portfolio events.
 
 \subsection{Risk bounds for actuarial estimators}
 
-The relevant class of valuation functions is broader than the
-compactly supported class.  Suppose that there are $M>0$ and a constant $c_{\psi}$ such that
+We consider bounded valuation functions that are constant outside a compact
+loss region.  Thus, for some $M>0$ and constant $c_{\psi}$,
 \begin{equation}
  \psi-c_{\psi}=0\quad\text{a.e. on }
  \mathbb{R}_{+}^{d}\setminus Q_{M}.
@@ -816,7 +810,7 @@ cancels, giving
  \label{eq:constant-tail-cancellation}
 \end{equation}
 
-\begin{theorem}[Posterior risk for bounded actuarial valuations]
+\begin{theorem}[Posterior risk for bounded valuations]
 \label{thm:functional-risk}
 Let $M>0$, $0<\alpha\leq1$, and let
 $f\in\mathcal{D}_{1}(\mathbb{R}_{+}^{d})$ be bounded.  Assume that
@@ -832,7 +826,7 @@ $A_{\psi,M}=\|\psi-c_{\psi}\|_{L^{1}(Q_{M})}$.  Then
  \label{eq:functional-mean-risk-exact}\\
  \mathbb{E}_{f}\mathbb{E}_{W}
  \left[\{\Theta_{\psi}(f_{N,n}^{W})-\Theta_{\psi}(f)\}^{2}
- \mid X_{1:N}\right]
+ \mid \mathbf{X}_{N}\right]
  &=\{\Theta_{\psi}(\mathcal{K}_{n}^{(d)}f)-\Theta_{\psi}(f)\}^{2}
    +\frac{2\operatorname{Var}_{f}\{b_{\psi,n}(X)\}}{N+1}.
  \label{eq:functional-integrated-risk-exact}
@@ -846,14 +840,14 @@ Moreover,
  \label{eq:functional-mean-risk-bound}\\
  \mathbb{E}_{f}\mathbb{E}_{W}
  \left[\{\Theta_{\psi}(f_{N,n}^{W})-\Theta_{\psi}(f)\}^{2}
- \mid X_{1:N}\right]
+ \mid \mathbf{X}_{N}\right]
  &\leq A_{\psi,M}^{2}\Delta_{n,M}(f;H,\alpha)^{2}
        +\frac{2\|\psi\|_{\infty}^{2}}{N+1}.
  \label{eq:functional-integrated-risk-bound}
 \end{align}
 \end{theorem}
 
-\begin{corollary}[Parametric-rate actuarial estimation]
+\begin{corollary}[Parametric-rate estimation]
 \label{cor:parametric-functional-rate}
 Fix $M>0$, $0<\alpha\leq1$, and a bounded valuation function $\psi$ satisfying
 \eqref{eq:compact-nonconstant-valuation}.  For constants $B,H_{0}>0$, uniformly
@@ -878,7 +872,7 @@ Corollary~\ref{cor:parametric-functional-rate},
 \[
  \mathbb{E}_{f}\Pi_{N,n_{N}}
  \left(\left|\Theta_{\psi}(g)-\Theta_{\psi}(f)\right|>
- L_{N}N^{-1/2}\mid X_{1:N}\right)\longrightarrow0.
+ L_{N}N^{-1/2}\mid \mathbf{X}_{N}\right)\longrightarrow0.
 \]
 On any class containing a regular one-dimensional submodel on which
 $\Theta_{\psi}$ is nonconstant, $N^{-1}$ is also the minimax squared-error
@@ -887,12 +881,11 @@ order by the usual parametric lower-bound argument
 \end{remark}
 
 The resolution in Corollary~\ref{cor:minimax-local-density} balances the
-local density-bias and variance bounds.  The larger resolution used in
-Corollary~\ref{cor:parametric-functional-rate} is an undersmoothing choice
-that makes the functional-bias bound $O(N^{-1/2})$ while the variance remains
-$O(N^{-1})$.  This choice is sufficient for the stated functional-risk
-bound.  No Bernstein--von Mises or frequentist credible-interval coverage claim is made
-here.
+local density-bias and variance bounds.  For valuation estimation,
+Corollary~\ref{cor:parametric-functional-rate} instead uses a larger
+resolution to make the bias bound $O(N^{-1/2})$ while the variance remains
+$O(N^{-1})$.  This undersmoothing choice is sufficient for the
+$O(N^{-1})$ squared-error bound.
 
 \subsection{Actuarial quantities and closed-form expressions}
 
@@ -920,7 +913,7 @@ For $x\in\mathbb{R}_{+}^{d}$ and $k=k_{n}(x)$, the component values in
 \eqref{eq:functional-and-component-value} are as follows.
 \begin{enumerate}[label=(\roman*),leftmargin=2.4em]
 \item For $u\geq0$, the aggregate exceedance valuation
-$\psi_{u}^{\mathrm{exc}}(y)=\mathbf{1}\{s(y)>u\}$,
+$\psi_{u}^{\mathrm{exc}}(y)=\mathbf{1}\{s(y)>u\}$ has component value
 \begin{equation}
  b_{\psi_{u}^{\mathrm{exc}},n}(x)=\overline G_{k,n}(u).
  \label{eq:component-exceedance}
@@ -988,49 +981,65 @@ estimates.
 \label{sec:numerical-demonstration}
 
 \begin{revision}
-We illustrate the inferential results with dependent positive losses from a
+Lognormal targets occur in the insurance claim-size example of
+\cite{AusinLopes2007} and the lognormal-mixture survival example of
+\cite{LiLeeKottas2024}.  Lemma~\ref{lem:inverse-half-moment-check}, applied
+componentwise to a finite mixture, verifies boundedness, Lipschitz continuity,
+and the inverse half-moment condition for these densities.  For independent
+complete observations from either target, our posterior mean has local squared
+density-risk bound $O(N^{-2/3})$ at resolution $n\asymp N^{2/3}$ by
+Corollary~\ref{cor:minimax-local-density}.  For a fixed bounded valuation
+that is constant outside a compact interval,
+Corollary~\ref{cor:parametric-functional-rate} gives squared-error bound
+$O(N^{-1})$ when $n\asymp N$.
+
+We illustrate the multivariate inferential results with dependent positive losses from a
 bivariate lognormal distribution.  Specifically, $X=(e^{Z_{1}},e^{Z_{2}})$,
 where $Z$ is normal with
 \[
  \mu=(0,0.25)^{\mathsf T},\qquad
  \Sigma=\begin{pmatrix}0.36&0.264\\0.264&0.64\end{pmatrix}.
 \]
-The log-scale correlation is $0.55$.  This is a low-dimensional analogue of
-the nonsingular lognormal setting discussed in Section~\ref{sec:discussion},
-not a replication of a published fit.  Its density is bounded and Lipschitz
+The log-scale correlation is $0.55$.  This extends the lognormal family used
+in \cite{AusinLopes2007,LiLeeKottas2024} to dependent bivariate losses.
+Its density is bounded and Lipschitz
 and has finite inverse half-moment, so the local density results apply with
 $d=2$ and $\alpha=1$.
 
-For $N\in\{200,500,1000,2000\}$, we formed the posterior mean
-$\widehat f_{N,n}$ by aggregating observations in their occupied cells.  Local
-$L^{2}(Q_{6})$ losses were evaluated by a $100\times100$ midpoint rule over 150
-independent data sets.  To keep the reported grids readily interpretable, we
-selected $n_D$ from $\{20,50,100,200\}$ by multiplicative proximity to
-$N^{1/2}$, breaking a tie upward.  This gives
-$n_D\in\{20,20,50,50\}$ at the four sample sizes.  At $N=1000$, we also
-evaluated the full regular grid to display the bias--variance trade-off.
-Separately, 1000 data sets at each sample size were used for the
+For $N\in\{200,500,1000,2000\}$, we form the posterior mean
+$\widehat f_{N,n}$ by aggregating observations in their occupied cells.  The
+mean integrated squared error (MISE) on $Q_6$ is estimated by averaging
+squared $L^{2}(Q_{6})$ losses over 150 independent data sets, with each
+integral evaluated by a $100\times100$ midpoint rule.  We use the prescribed
+density resolution $n_D=\lceil N^{1/2}\rceil$, giving $15,23,32,45$ at the
+four sample sizes.  At $N=1000$, a separate sweep over
+$n\in\{20,32,50,100,200\}$ displays the bias--variance trade-off.
+Separately, 1000 data sets at each sample size are used for the
 aggregate exceedance probability
-$\theta_{1}=\Pr(X_{1}+X_{2}>4)=0.21151$ and capped layer
+$\theta_{1}=\Pr(X_{1}+X_{2}>4)\approx0.21151$ and the capped aggregate stop-loss expectation
 \[
  \theta_{2}=\mathbb E\!\left[\min\{(X_{1}+X_{2}-2.5)_{+},2.5\}\right]
- =0.65210.
+ \approx0.65210.
 \]
-Both are covered by Corollary~\ref{cor:closed-form-actuarial}.  We used the
-sufficient undersmoothing choice $n_{\Theta}=N$, evaluated the component
-values in closed form, and obtained the posterior mean vector and covariance
+Both are covered by Corollary~\ref{cor:closed-form-actuarial}.  We use the
+sufficient undersmoothing choice $n_{\Theta}=N$, evaluate the component
+values in closed form, and obtain the posterior mean vector and covariance
 matrix from Proposition~\ref{prop:functional-posterior}.  The two reference
-values were computed by conditional-lognormal quadrature.
+values are computed by quadrature.  Functional errors are summarized by the
+empirical root mean squared error (RMSE), the square root of the empirical
+mean squared error (MSE).
 
 \begin{figure}[!ht]
 \centering
 \color{blue}
 \includegraphics[width=\linewidth]{figures/numerical_demonstration.pdf}
-\caption{Monte Carlo illustration of the derived inferential devices.
-Panel (a) separates squared smoothing bias and sampling variance; the vertical
-line is $\sqrt{1000}$.  Panel (b) uses the grid-selected $N^{1/2}$ density
-resolutions for density loss and $n_{\Theta}=N$ for the two bounded
-functionals.  The grey lines have the theoretical reference orders.}
+\caption{Monte Carlo illustration of density and valuation risk.
+Panel (a) shows estimates of squared smoothing bias, sampling variance, and
+MISE at $N=1000$; the vertical line marks
+$n_D=\lceil\sqrt{1000}\rceil=32$.  Panel (b) uses
+$n_D=\lceil N^{1/2}\rceil$ and $n_{\Theta}=N$ for the two
+bounded functionals.  The grey lines have the reference orders $N^{-1/2}$
+for density MISE and $N^{-1}$ for functional MSE.}
 \label{fig:numerical-demonstration}
 \end{figure}
 
@@ -1045,37 +1054,31 @@ number of occupied components at resolution $n_D$.}
 \setlength{\tabcolsep}{3.6pt}
 \begin{tabular}{rrrrrr}
 \toprule
-$N$ & $n_D$ & $\overline K_D$ & Density MISE & Exceedance & Capped layer \\
+$N$ & $n_D$ & $\overline K_D$ & Density MISE & Exceedance & Capped stop-loss \\
 \midrule
-200  & 20 & 190  & 0.01289 & 0.02749 (0.02798) & 0.06408 (0.06484) \\
-500  & 20 & 439  & 0.00821 & 0.01827 (0.01790) & 0.04141 (0.04115) \\
-1000 & 50 & 957  & 0.00518 & 0.01277 (0.01276) & 0.02895 (0.02919) \\
-2000 & 50 & 1836 & 0.00318 & 0.00910 (0.00905) & 0.02106 (0.02063) \\
+200  & 15 & 182  & 0.01392 & 0.02827 (0.02796) & 0.06568 (0.06475) \\
+500  & 23 & 452  & 0.00786 & 0.01824 (0.01793) & 0.04129 (0.04120) \\
+1000 & 32 & 902  & 0.00509 & 0.01283 (0.01275) & 0.02897 (0.02917) \\
+2000 & 45 & 1801 & 0.00315 & 0.00911 (0.00905) & 0.02086 (0.02063) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-At $N=1000$, the density MISE among the regular candidates was minimized at
-$n=50$; the values $20$ and $50$ bracket $\sqrt{1000}\simeq32$.  Increasing
-$n$ over the candidate grid reduced squared smoothing bias but increased
-sampling variation and the occupied-component count.  The Monte
-Carlo integrated posterior loss agreed with the empirical counterpart of
-\eqref{eq:integrated-posterior-local-risk-exact} to within $2.8\%$ across the
-four sample sizes.  The descriptive log--log slopes were $-0.61$ for density
-MISE and $-0.96$ and $-0.97$ for the MSEs of the two functionals, compared
+At $N=1000$, the empirical density MISE is smallest at the prescribed $n=32$
+among the five sweep values, although the value at $n=50$ is similar.
+Increasing $n$ reduces squared smoothing bias but increases sampling
+variation and the occupied-component count.  The Monte
+Carlo integrated posterior loss agrees with the empirical counterpart of
+\eqref{eq:integrated-posterior-local-risk-exact} to within $1.1\%$ across the
+four sample sizes.  The descriptive log--log slopes are $-0.64$ for density
+MISE and $-0.99$ and $-1.00$ for the MSEs of the two functionals, compared
 with the respective reference orders $N^{-1/2}$ and $N^{-1}$.  The posterior standard deviations
 in Table~\ref{tab:numerical-demonstration} also track the repeated-sampling
 RMSEs.  For example, at $N=1000$ the mean posterior covariance between the two
-valuations was $3.44\times10^{-4}$, compared with an empirical covariance of
-$3.37\times10^{-4}$.  These finite-sample comparisons are descriptive rather
-than additional asymptotic or coverage claims.
+valuations is $3.43\times10^{-4}$, compared with an empirical covariance of
+$3.41\times10^{-4}$.
 
-The experiment demonstrates the Bayesian-bootstrap construction studied here;
-it does not assess an adaptive or EM fit, an uncapped stop loss, or frequentist
-coverage of posterior credible sets.  All code, parameter settings, random
-seeds, reference calculations, and files reproducing
-Figure~\ref{fig:numerical-demonstration} and
-Table~\ref{tab:numerical-demonstration} are available at
+The R code and numerical results are available at
 \url{https://github.com/hiendn/multivariate-erlang-mixture-inference}.
 \end{revision}
 
@@ -1083,53 +1086,39 @@ Table~\ref{tab:numerical-demonstration} are available at
 \label{sec:discussion}
 
 \begin{revision}
-The approximation operator supplies the smoothing bias of a fitted
-Bayesian-bootstrap Erlang mixture.  Together with the kernel norm bound and
-Dirichlet variance identity, it gives local density-risk bounds and risk
-bounds for bounded actuarial valuations.  The fixed-grid transfer inequality
-also separates operator bias from errors in other estimates of the cell
-weights.  Any application to such estimates needs a corresponding statistical
-bound for those weight errors.
+\nopagebreak[4]
+The approximation bounds control the smoothing bias of the
+Bayesian-bootstrap Erlang estimator.  Combined with the kernel norm bound and
+Dirichlet variance identity, they give local density-risk bounds and
+squared-error bounds for bounded actuarial valuations that are constant
+outside a compact loss region.
 
-The examples in \cite{LeeLin2012} illustrate both the reach and the
-limits of these results.  Their twelve-dimensional lognormal example has a
-bounded, Lipschitz density and a finite inverse half-moment, as verified for
-nonsingular lognormal laws in Lemma~\ref{lem:inverse-half-moment-check}.
-For data from this model, Corollary~\ref{cor:minimax-local-density} with
-$d=12$ and $\alpha=1$ gives the upper rate $N^{-1/7}$ for local squared
-density error of the smoothed Bayesian-bootstrap estimator.  The bounded
-aggregate valuations in Corollary~\ref{cor:closed-form-actuarial} instead have
-squared-error order $N^{-1}$ when $n\asymp N$.  This comparison distinguishes
-the dimension-dependent density-risk bound from the bound for a fixed capped
-valuation.  The numerical accuracy of their EM fit is a separate question. 
+\cite{AusinLopes2007} use Bayesian Erlang mixtures with an unknown number of
+components and component-specific rates, and propagate claim-size uncertainty
+to ruin probabilities.  In
+\cite{LiLeeKottas2024}, the common-scale Erlang weights are increments of a
+distribution assigned a Dirichlet process prior, and the scale and number of
+terms are inferred through the mixture likelihood.  Here the weights come
+from the Bayesian bootstrap of the observed sampling distribution at a
+specified resolution.  The empirical cell counts and Dirichlet identities
+then give the density and valuation risk bounds in
+Sections~\ref{sec:bayesian-estimation}--\ref{sec:actuarial-functionals}.
+These bounds concern our smoothed Bayesian-bootstrap estimator and do not
+establish risk bounds for the fitted posteriors in those papers or for their
+ruin-probability and hazard-function targets.
 
-Their bivariate extreme-dependence examples start from the upper and lower
-Fr\'echet--Hoeffding couplings of continuous gamma marginals.  Those target
-laws are supported on curves and have no bivariate Lebesgue density.  The
-measure-smoothing construction in Proposition~\ref{prop:measure-smoothing-transfer}
-is still defined, but the density-approximation and density-risk theorems do
-not apply to those singular targets.  Thus weak approximation of a joint law
-and approximation of its density answer different questions in these
-examples.
+For fixed Erlang component densities, likelihood or other weight estimators
+could be studied by combining Proposition~\ref{prop:measure-smoothing-transfer}
+with bounds on their weight-estimation errors.  Methods that select the
+shapes, common rate, or penalty require additional control of that selection
+step.  Extension to the setting of \cite{VerbelenAntonioClaeskens2016} also
+requires a sampling model for censored losses.
 
-The valuation results also apply beyond insurance to bounded reliability or
-risk indicators whose nonconstant part has compact support.
-
-Other uses of the approximation bounds need not employ the Bayesian bootstrap.
-For a fixed dictionary, likelihood or other weight estimators could be studied
-by combining Proposition~\ref{prop:measure-smoothing-transfer} with their
-weight-error bounds.  Methods that select the shapes, common rate, or penalty
-require additional control of that selection step.  Extending this analysis
-to the censored-data setting of \cite{VerbelenAntonioClaeskens2016} would also
-require a sampling model that accounts for censoring rather than treating
-censored observations as complete losses.
-
-Further questions concern data-driven resolution selection and posterior
-credible-interval coverage.  The present risk calculations suggest how to
-balance smoothing and sampling error, but do not establish adaptation to
-unknown smoothness or a Bernstein--von Mises limit.  Extending the valuation results to unbounded valuations
-would require the additional tail control identified after
-Corollary~\ref{cor:closed-form-actuarial}.
+The risk bounds suggest resolution choices for a specified smoothness.
+Adapting these choices to unknown smoothness and establishing posterior
+credible-interval coverage remain open questions.  Extending the valuation
+results to unbounded payoffs requires the additional tail control identified
+after Corollary~\ref{cor:closed-form-actuarial}.
 \end{revision}
 
 \appendix
@@ -1181,7 +1170,7 @@ densities with common scale parameter $1/n$ such that
 \]
 \end{corollary}
 
-The next pair of theorems give global weighted sup-norm and $L^p$ rates.
+The next \textcolor{blue}{two theorems} give global weighted sup-norm and $L^p$ rates.
 
 \begin{theorem}[Weighted H\"older rate in $L_{\infty,\nu}$]\label{thm:weighted-holder-rate}
 Let $\nu\ge0$ and $0<\alpha\le1$. If $f\in L_{\infty,\nu}(\mathbb{R}_{+}^{d})$
@@ -2252,10 +2241,10 @@ For posterior contraction, Markov's inequality and
 \eqref{eq:minimax-integrated-posterior-rate} give
 \begin{align*}
  &\mathbb{E}_{f}\Pi_{N,n_{N}}
- \left(\|g-f\|_{L^{2}(Q_{M})}>L_{N}\varepsilon_{N}\mid X_{1:N}\right)\\
+ \left(\|g-f\|_{L^{2}(Q_{M})}>L_{N}\varepsilon_{N}\mid \mathbf{X}_{N}\right)\\
  &\quad\leq
  \frac{\mathbb{E}_{f}\mathbb{E}_{W}
- [\|f_{N,n_{N}}^{W}-f\|_{L^{2}(Q_{M})}^{2}\mid X_{1:N}]}
+ [\|f_{N,n_{N}}^{W}-f\|_{L^{2}(Q_{M})}^{2}\mid \mathbf{X}_{N}]}
       {L_{N}^{2}\varepsilon_{N}^{2}}
  \leq\frac{C}{L_{N}^{2}}\longrightarrow0.
 \end{align*}
@@ -2355,22 +2344,16 @@ through Discovery Projects DP250100860 and DP230100905. AI tools were used for l
 \section*{Competing interests}
 
 The author declares no competing interests. 
-\begin{thebibliography}{10}
-\bibitem{AltomareCampiti1994} Altomare, F., \& Campiti, M. (1994).
-\emph{Korovkin-type approximation theory and its applications}. Berlin:
-Walter de Gruyter.
 
+\begin{thebibliography}{10}
 \bibitem{AltomareCappellettiLeonessa2013} Altomare, F., Cappelletti
 Montano, M., \& Leonessa, V. (2013). On a generalization of Szász--Mirakjan--Kantorovich
 operators. \emph{Results in Mathematics}, \textbf{63}, 837--863.
 
-\bibitem{AsmussenAlbrecher2010} Asmussen, S., \& Albrecher, H. (2010).
-\emph{Ruin probabilities} (2nd ed.). Singapore: World Scientific.
-\url{https://doi.org/10.1142/7431}
-
-\bibitem{BagnatoPunzo2013} Bagnato, L., \& Punzo, A. (2013). Finite
-mixtures of unimodal beta and gamma densities and the bumps algorithm.
-\emph{Computational Statistics}, \textbf{28}(4), 1571--1597.
+\bibitem{AusinLopes2007} \textcolor{blue}{Aus\'in, M. C., \& Lopes, H. F.
+(2007). Bayesian estimation of ruin probabilities with a heterogeneous and
+heavy-tailed insurance claim-size distribution. \emph{Australian \& New Zealand
+Journal of Statistics}, \textbf{49}(4), 415--434.}
 
 \bibitem{BarbosuEtAl2010} Bărbosu, D., Pop, O. T., \& Miclăuş, D.
 (2010). The Kantorovich form of some extensions for the Szász--Mirakjan
@@ -2412,6 +2395,10 @@ modeling for Poisson process intensities. \emph{Statistics and Computing},
 \& Willmot, G. E. (2012). \emph{Loss models: From data to decisions}
 (4th ed.). Hoboken, NJ: Wiley.
 
+\bibitem{LauSiuYang2006} \textcolor{blue}{Lau, J. W., Siu, T. K., \& Yang, H.
+(2006). On Bayesian mixture credibility. \emph{ASTIN Bulletin},
+\textbf{36}(2), 573--588.}
+
 \bibitem{LeeLin2010} Lee, S. C. K., \& Lin, X. S. (2010). Modeling
 and evaluating insurance losses via mixtures of Erlang distributions.
 \emph{North American Actuarial Journal}, \textbf{14}(1), 107--130.
@@ -2420,9 +2407,9 @@ and evaluating insurance losses via mixtures of Erlang distributions.
 dependent risks with multivariate Erlang mixtures. \emph{ASTIN Bulletin:
 The Journal of the IAA}, \textbf{42}(1), 153--180.
 
-\bibitem{MahmudovKara2024} Mahmudov, N. I., \& Kara, M. (2024). New
-Kantorovich-type Szász--Mirakjan operators. \emph{Bulletin of the
-Iranian Mathematical Society}, \textbf{50}(5), Article 75.
+\bibitem{LiLeeKottas2024} \textcolor{blue}{Li, Y., Lee, J., \& Kottas, A.
+(2024). Bayesian nonparametric Erlang mixture modeling for survival analysis.
+\emph{Computational Statistics \& Data Analysis}, \textbf{191}, Article 107874.}
 
 \bibitem{Mirakyan1941} Mirakyan, G. M. (1941). Approximation des
 fonctions continues au moyen de polynômes de la forme $e^{-nx}\sum_{k=0}^{\infty}f\!\left(\frac{k}{n}\right)\frac{(nx)^{k}}{k!}$.
@@ -2445,16 +2432,9 @@ of actuarial mathematics} (3rd ed.). Hoboken, NJ: Wiley.
 polynomials to the infinite interval. \emph{Journal of Research of
 the National Bureau of Standards}, \textbf{45}(3), 239--245. \url{https://doi.org/10.6028/jres.045.024}
 
-\bibitem{Tijms2003} Tijms, H. C. (2003). \emph{A first course in
-stochastic models}. Chichester: Wiley.
-
 \bibitem{Totik1983} Totik, V. (1983). Approximation by Szász--Mirakjan--Kantorovich
 operators in $L^{p}$ $(p>1)$. \emph{Analysis Mathematica}, \textbf{9}(2),
 147--167.
-
-\bibitem{Totik1985} Totik, V. (1985). Saturation of Kantorovich type
-operators. \emph{Periodica Mathematica Hungarica}, \textbf{16}(2),
-115--126.
 
 \bibitem{vanDerVaart1998} van der Vaart, A. W. (1998). \emph{Asymptotic
 statistics}. Cambridge: Cambridge University Press.
@@ -2477,20 +2457,9 @@ applications. \emph{ASTIN Bulletin: The Journal of the IAA}, \textbf{45}(1),
 F. (2001). Mixtures of gamma distributions with applications. \emph{Journal
 of Computational and Graphical Statistics}, \textbf{10}(3), 440--454.
 
-\bibitem{YadavMishraMeherMursaleen2022} Yadav, R., Mishra, V. N.,
-Meher, R., \& Mursaleen, M. (2022). Statistical convergence of Szász--Mirakjan--Kantorovich-type
-operators and their bivariate extension. \emph{Filomat}, \textbf{36}(17),
-5895--5912.
-
 \bibitem{YinEtAl2019} Yin, C., Lin, X. S., Huang, R., \& Yuan, H.
 (2019). On the consistency of penalized MLEs for Erlang mixtures.
 \emph{Statistics \& Probability Letters}, \textbf{145}, 12--20.
-
-\bibitem{YoungEtAl2019} Young, D. S., Chen, X., Hewage, D. C., \&
-Nilo-Poyanco, R. (2019). Finite mixture-of-gamma distributions: Estimation,
-inference, and model-based clustering. \emph{Advances in Data Analysis
-and Classification}, \textbf{13}(4), 1053--1082.
-
 
 \bibitem{Rubin1981} Rubin, D. B. (1981). The Bayesian bootstrap.
 \emph{The Annals of Statistics}, 9(1), 130--134.
