@@ -310,23 +310,28 @@ draw_figure <- function() {
   on.exit(par(old_par), add = TRUE)
   par(mfrow = c(1, 2), mar = c(4.1, 5.0, 1.8, 0.8),
       mgp = c(3.2, 0.75, 0), tcl = -0.25, las = 1,
-      cex = 0.84)
+      cex = 0.90)
 
   density_components <- as.matrix(
     resolution_summary[, c("bias2", "variance", "mise")]
   )
   matplot(resolution_summary$n, density_components,
           type = "b", log = "xy", pch = c(1, 2, 16), lty = c(2, 3, 1),
+          lwd = c(1.9, 2.4, 1.9),
           col = c("#0072B2", "#D55E00", "#000000"),
           ylim = c(min(density_components) * 0.8,
                    max(density_components) * 3),
           xlab = expression("resolution " * n),
           ylab = "integrated squared error")
-  abline(v = density_resolution(resolution_N), lty = 3, col = "grey45")
-  legend("topright", c("squared bias", "sampling variance", "MISE"),
+  segments(density_resolution(resolution_N), min(density_components) * 0.8,
+           density_resolution(resolution_N), max(density_components) * 0.8,
+           lty = 3, lwd = 2.0, col = "grey35")
+  legend("topleft", c("squared bias", "sampling variance", "MISE"),
          pch = c(1, 2, 16), lty = c(2, 3, 1),
-         col = c("#0072B2", "#D55E00", "#000000"), bty = "n",
-         cex = 0.78)
+         lwd = c(1.9, 2.4, 1.9),
+         col = c("#0072B2", "#D55E00", "#000000"),
+         bty = "o", bg = "white", box.col = "white",
+         inset = 0.02, cex = 0.94)
   mtext(sprintf("(a) Bias-variance, N = %d", resolution_N),
         side = 3, line = 0.4,
         font = 2, cex = 0.86)
@@ -335,20 +340,26 @@ draw_figure <- function() {
              rate_summary$exceedance_rmse^2,
              rate_summary$layer_rmse^2)
   matplot(rate_summary$N, y, type = "b", log = "xy",
-          pch = c(16, 17, 15), lty = 1,
+          pch = c(16, 17, 15), lty = 1, lwd = 1.9,
           col = c("#000000", "#009E73", "#CC79A7"),
-          ylim = c(min(y) * 0.8, max(y) * 3),
+          ylim = c(min(y) * 0.35, max(y) * 7),
           xlab = expression("sample size " * N), ylab = "mean squared error")
   ref_density <- y[1L, 1L] * (rate_summary$N / rate_summary$N[1L])^(-0.5)
   ref_functional <- y[1L, 2L] * (rate_summary$N / rate_summary$N[1L])^(-1)
-  lines(rate_summary$N, ref_density, lty = 2, col = "grey35")
-  lines(rate_summary$N, ref_functional, lty = 3, col = "grey35")
+  lines(rate_summary$N, ref_density, lty = 2,
+        lwd = 2.1, col = "grey30")
+  lines(rate_summary$N, ref_functional, lty = 3,
+        lwd = 2.5, col = "grey30")
   legend("topright",
-         c("density", "exceedance", "capped layer",
-           expression(N^{-1/2}), expression(N^{-1})),
-         pch = c(16, 17, 15, NA, NA), lty = c(1, 1, 1, 2, 3),
-         col = c("#000000", "#009E73", "#CC79A7", "grey35", "grey35"),
-         bty = "n", cex = 0.76)
+         c("density", "exceedance", "capped layer"),
+         pch = c(16, 17, 15), lty = 1, lwd = 1.9,
+         col = c("#000000", "#009E73", "#CC79A7"),
+         bty = "o", bg = "white", box.col = "white",
+         inset = 0.02, cex = 0.94)
+  legend("bottomleft", c(expression(N^{-1/2}), expression(N^{-1})),
+         lty = c(2, 3), lwd = c(2.1, 2.5), col = "grey30",
+         bty = "o", bg = "white", box.col = "white",
+         inset = 0.02, cex = 0.94)
   mtext("(b) Risk at prescribed resolutions", side = 3, line = 0.4,
         font = 2, cex = 0.86)
 }

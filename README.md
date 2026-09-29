@@ -85,8 +85,8 @@ A standard TeX installation with `latexmk` and pdfLaTeX is sufficient:
 latexmk -pdf main.tex
 ```
 
-Run the numerical script once before this command so that the generated PDF
-figure is present.
+The generated PDF and PNG figures are included in the repository.  Rerun the
+numerical script before compiling if you change the plotting code or results.
 
 The bibliography is included directly in `main.tex`; BibTeX and Biber are not
 required.
